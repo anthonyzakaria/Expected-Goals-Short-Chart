@@ -1,0 +1,42 @@
+import numpy as np
+from matplotlib import cm
+import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+
+from mplsoccer import (VerticalPitch, Pitch, create_transparent_cmap,
+                       FontManager, arrowhead_marker, Sbopen)
+
+
+parser = Sbopen()
+df, related, freeze, tactics = parser.event(22912)
+
+
+df_shots_winner = df[(df.type_name == 'Shot') & (df.team_name == 'Liverpool')].copy()
+
+
+fm_rubik = FontManager('https://raw.githubusercontent.com/google/fonts/main/ofl/'
+                       'rubikmonoone/RubikMonoOne-Regular.ttf')
+
+pitch = VerticalPitch(pad_bottom=0.5,  
+                      half=True, 
+                      goal_type='box',
+                      goal_alpha=0.8)  
+fig, ax = pitch.draw(figsize=(12, 10))
+sc = pitch.scatter(df_shots_winner.x, df_shots_winner.y,
+                   
+                   s=(df_shots_winner.shot_statsbomb_xg * 900) + 100,
+                   c='#b94b75', 
+                   edgecolors='#383838',  
+                  
+                   marker='h',
+                   ax=ax)
+txt = ax.text(x=40, y=80, s='Liverpool shots chart\n Champions League Final',
+              size=30,
+              
+              fontproperties=fm_rubik.prop, color=pitch.line_color,
+              va='center', ha='center')
+
+
+xG = np.sum(df_shots_winner.shot_statsbomb_xg)
+
+print("Expected Goals:",xG)
