@@ -30,7 +30,7 @@ sc = pitch.scatter(df_shots_winner.x, df_shots_winner.y,
                   
                    marker='h',
                    ax=ax)
-txt = ax.text(x=40, y=80, s='Liverpool shots chart\n Champions League Final',
+txt = ax.text(x=40, y=80, s='Liverpool shots chart\n Champions League Final(size of hexagon proportionate to expected goal value)',
               size=30,
               
               fontproperties=fm_rubik.prop, color=pitch.line_color,
